@@ -9,7 +9,7 @@ const TIMEOUT_DURATION_SECONDS = 60;
 
 let browser: puppeteer.Browser | null = null;
 
-async function initializeBrowser() {  
+async function initializeBrowser() {
   try {
     browser = await puppeteer.launch({
       args: [
@@ -88,7 +88,7 @@ async function generatePDF(url: string, page: puppeteer.Page) {
 
 const server = http.createServer(async (req, res) => {
   let page: puppeteer.Page | null = null;
-  
+
   try {
     await initializeBrowser();
     if (!browser) {
@@ -158,7 +158,7 @@ const server = http.createServer(async (req, res) => {
         console.error("Error closing page:", err);
       }
     }
-    
+
     if (browser) {
       try {
         await browser.close();
@@ -170,4 +170,6 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-server.listen(3000, '0.0.0.0');
+const port = parseInt(process.env.PORT || "3000", 10);
+
+server.listen(port, "0.0.0.0");
