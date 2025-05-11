@@ -12,7 +12,8 @@ RUN npm run build
 
 FROM ghcr.io/puppeteer/puppeteer:22.12.0
 
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PORT=3000
 
 WORKDIR /usr/src/app
 

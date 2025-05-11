@@ -90,7 +90,6 @@ const server = http.createServer(async (req, res) => {
   let page: puppeteer.Page | null = null;
 
   try {
-    await initializeBrowser();
     if (!browser) {
       res.writeHead(500, { "Content-Type": "application/json" });
       res.end(JSON.stringify({ error: "Browser initialization failed" }));
@@ -158,18 +157,11 @@ const server = http.createServer(async (req, res) => {
         console.error("Error closing page:", err);
       }
     }
-
-    if (browser) {
-      try {
-        await browser.close();
-      } catch (err) {
-        console.error("Error closing browser:", err);
-      }
-      browser = null;
-    }
   }
 });
 
-const port = parseInt(process.env.PORT || "3000", 10);
+const port = process.env.PORT || 3000;
 
-server.listen(port, "0.0.0.0");
+server.listen(port, async () => {
+  await initializeBrowser();
+});
